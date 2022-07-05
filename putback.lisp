@@ -1,0 +1,10 @@
+(defmacro putback (expr &rest operations)
+  (if (equal operations nil)
+      expr
+      (let ((ans expr))
+	(dolist (p operations ans)
+	  (if (typep p 'list)
+	      (let ((fst (pop p)))
+		(setq ans (concatenate 'list (list ans) p))
+		(push fst ans))
+	      (setq ans (concatenate 'list (list p) (list ans))))))))
